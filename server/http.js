@@ -19,6 +19,29 @@ const serve=http.createServer(async(req,res)=>{
         req:req,
         res:res
     }
+       // url参数解析
+    // /login？name=1
+    function urlParser(originUrl){
+        //切割
+        const params=url.split('?')
+        const url=params[0]
+        const result={}
+        if(params.length===2){
+           const pArr= params[1].split('&')
+         
+           pArr.forEach(pair=>{
+            const pairArr=pair.split('=')
+            result[pairArr[0]]=pairArr[1]
+           })
+        }
+        return {
+            url,
+            params:result
+        }
+    }
+
+ 
+ 
     //如何让不同的url+method组合，路由到不同的处理函数
     const routerInstance=router.find(r=>{
         r.path===req.url
